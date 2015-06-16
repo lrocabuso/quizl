@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Quiz el juego de las preguntas</h1>
+    <!-- Si deseamos enviar la respuesta oculta el cuerpo del documento utilizaremos el método POST -->
+    <form method="GET" action="/quizes/answer">
+      <p>Pregunta: <%= pregunta %></p>
+      <input type="text" name="respuesta" value="Introduce respuesta" />
+      <input type="submit" value="Enviar respuesta" />
+    </form>
+  </body>
+</html>
