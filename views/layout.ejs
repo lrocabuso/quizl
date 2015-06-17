@@ -3,23 +3,43 @@
   <head>
     <meta charset="utf-8">
     <title>Quiz Creator</title>
-    <link rel='stylesheet' type="text/css" href='/stylesheets/style.css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/darkly/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <style type="text/css">
+      /* Arreglos de estilo para que el footer siempre se muestre en la parte inferior de la pagina */
+      html {position: relative; min-height: 100%;}
+      /* Margen inferior igual a la altura de la seccion footer */
+      body {margin-bottom: 40px;}
+      /* Clase que aplicaremos a la sección footer para mantenerla en la parte inferior */
+      .footer {position: absolute;bottom: 0;width: 100%;
+        /* Establecemos la altura fija para la sección footer */
+        height: 40px;
+        background: #375A7F;padding-left: 15px;padding-top: 2px;
+      }
+    </style>
   </head>
   <body lang="es">
-    <div id="page-wrap">
-    <header class="main" id="h1">
-      <h2>Quiz el juego de las preguntas</h2>
-      <nav class="main" id="n1" role="navigation">
-        <span><a href="/">Inicio</a></span>
-        <span><a href="/quizes/question">Preguntas</a></span>
-      </nav>
+    <!-- ZONA DE CABECERA -->
+    <header  id="h1">
+    <% include ./includes/cabecera_pagina %>
     </header>
-    <section class="main" id="s1">
-      <%- body %>
-    </section>
-    <footer  class="main" id="f1">
-      <a href="http://es.wikipedia.org/wiki/Quiz" target="_blank">¿Que es un Quiz?</a>
+    <!--ZONA DE NAVEGACION -->
+    <nav class="navbar navbar-default" role="navigation" id="n1">
+    <% include ./includes/menu_navegacion %>
+    </nav>
+    <!-- ZONA DE CONTENIDOS -->
+    <div class="container">
+      <section  id="s1">
+        <%- body %>
+      </section>
+    </div>
+    <!-- ZONA DE PIE DE PAGINA -->
+    <footer class="footer"   id="f1">
+    <% include ./includes/pie_pagina %>
     </footer>
-  </div>
+    <!-- ZONA DE CARGA DE SCRIPTS EXTERNOS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   </body>
 </html>

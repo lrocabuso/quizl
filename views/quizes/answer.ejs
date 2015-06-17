@@ -1,2 +1,9 @@
-    <p>Respuesta: <%= respuesta %></p>
-    <a href="/quizes/question">Intentalo de nuevo.</a>
+    <div class="panel <%= tipopanel %>">
+      <div class="panel-heading">
+        <h3 class="panel-title">Correción de la pregunta</h3>
+      </div>
+      <div class="panel-body">
+        <p>Respuesta: <%= respuesta %></p>
+        <p><a class="btn btn-primary btn-md"href="/quizes/question">Inténtalo de nuevo.</a></p>
+      </div>
+    </div>

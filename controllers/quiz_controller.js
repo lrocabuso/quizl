@@ -6,8 +6,12 @@ exports.question = function(req, res){
 // Petición GET /quizes/answer
 exports.answer = function(req, res){
   var msg = 'Correcta';
+  var tipo_panel = 'panel-success';
   // Si la petición es de tipo GET consultaremos la variable de query
   // Si la petición es de tipo POST consultaremos la variable de body
-  if(req.query.respuesta.toUpperCase() !== 'ROMA') msg = 'Incorrecta';
-  res.render('quizes/answer',{title: 'Respuesta', respuesta: msg});
+  if(req.query.respuesta.toUpperCase() !== 'ROMA') {
+    msg = 'Incorrecta (' + req.query.respuesta + ')';
+    tipo_panel = 'panel-warning';
+  }
+  res.render('quizes/answer',{title: 'Respuesta', respuesta: msg, tipopanel: tipo_panel});
 };
