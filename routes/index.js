@@ -17,4 +17,9 @@ router.get('/quizes/answer',quizController.answer);
 // la petición POST para la respuesta de la siguiente manera
 // router.post('/quizes/answer',quizController.answer);
 
+// GET pagina de author
+router.get('/author',function(req, res, next) {
+    res.render('author', { });
+});
+
 module.exports = router;

@@ -1,23 +1,14 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="utf-8">
     <title>Quiz Creator</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="Author" content="Luis Roca Busó"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.4/darkly/bootstrap.min.css" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    <style type="text/css">
-      /* Arreglos de estilo para que el footer siempre se muestre en la parte inferior de la pagina */
-      html {position: relative; min-height: 100%;}
-      /* Margen inferior igual a la altura de la seccion footer */
-      body {margin-bottom: 40px;}
-      /* Clase que aplicaremos a la sección footer para mantenerla en la parte inferior */
-      .footer {position: absolute;bottom: 0;width: 100%;
-        /* Establecemos la altura fija para la sección footer */
-        height: 40px;
-        background: #375A7F;padding-left: 15px;padding-top: 2px;
-      }
-    </style>
+    <link href="/stylesheets/style.css" rel="stylesheet">
   </head>
   <body lang="es">
     <!-- ZONA DE CABECERA -->
@@ -41,5 +32,6 @@
     <!-- ZONA DE CARGA DE SCRIPTS EXTERNOS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script>$('[rel=popover]').popover();</script>
   </body>
 </html>
