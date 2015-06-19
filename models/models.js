@@ -24,7 +24,7 @@ var Sequelize = require('sequelize');
 
 if (dialect==='postgres') {
   // Usar la BD SQLite por medio del modulo Sequelize
-  var sequelize = new Sequelize(process.env.DATABASE_URL);  
+  var sequelize = new Sequelize(process.env.DATABASE_URL);
 } else {
 // Usar la BD SQLite por medio del modulo Sequelize
 var sequelize = new Sequelize(DB_name, user, pwd,
