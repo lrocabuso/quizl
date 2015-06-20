@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Seleccione una pregunta</h3>
+  </div>
+  <div class="panel-body">
+    <table>
+      <% var a; for(i=0; i < preguntas.length; i++) { %>
+        <tr><td><a href='quizes/<%= preguntas[i].id %>'><%= preguntas[i].pregunta %></a></td></tr>
+      <% } %>
+    </table>
+  </div>
+</div>

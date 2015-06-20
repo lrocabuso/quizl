@@ -1,12 +1,13 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-      <h3 class="panel-title">Pregunta</h3>
+      <h3 class="panel-title">Responda a la pregunta</h3>
     </div>
     <div class="panel-body">
     <!-- Si deseamos enviar la respuesta oculta el cuerpo del documento utilizaremos el método POST -->
-    <form method="GET" action="/quizes/answer" class="form-horizontal">
+    <!-- En el módulo 7 añadimos el id de la pregunta como parametro -->
+    <form method="GET" action="/quizes/<%= pregunta.id %>/answer" class="form-horizontal">
     <fieldset>
-      <legend><%= pregunta %></legend>
+      <legend><%= pregunta.pregunta %></legend>
       <div class="form-group">
         <label for="resp" class="col-lg-2 control-label">Respuesta</label>
         <div class="col-lg-10">
