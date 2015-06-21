@@ -3,10 +3,15 @@
     <h3 class="panel-title">Seleccione una pregunta</h3>
   </div>
   <div class="panel-body">
-    <table>
+    <!-- Utilizamos div responsive para que la tabla se pueda adaptar a los dispositivos moviles-->
+    <div class="table-responsive">
+    <table class="table">
+      <tbody>
       <% var a; for(i=0; i < preguntas.length; i++) { %>
         <tr><td><a href='quizes/<%= preguntas[i].id %>'><%= preguntas[i].pregunta %></a></td></tr>
       <% } %>
+    </tbody>
     </table>
+    </div>
   </div>
 </div>

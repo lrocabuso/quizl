@@ -11,12 +11,14 @@
       <div class="form-group">
         <label for="resp" class="col-lg-2 control-label">Respuesta</label>
         <div class="col-lg-10">
-        <input class="form-control" id="resp" name="respuesta" placeholder="Introduce respuesta" type="text">
+          <!-- Añadimos atributo required de HTML5 para que sea obligatorio rellenar el campo -->
+        <input class="form-control" id="resp" name="respuesta" placeholder="Introduce respuesta" type="text" required>
         </div>
       </div>
       <div class="form-group">
         <div class="col-lg-10 col-lg-offset-2">
-        <button type="reset" class="btn btn-default">Cancelar</button>
+        <a type="button" class="btn btn-default" href='/quizes'>Voler</a>
+        <button type="reset" class="btn btn-warning">Borrar respuesta</button>
         <button type="submit" class="btn btn-primary">Enviar respuesta</button>
         </div>
       </div>

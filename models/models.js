@@ -49,11 +49,25 @@ sequelize.sync().then(function(){
       Quiz.create({
         pregunta: 'Capital de Italia',
         respuesta: 'Roma'
-      });
-      Quiz.create({
-        pregunta: 'Capital de Portugal',
-        respuesta: 'Lisboa'
       }).then(function(){console.log('Base de datos inicializada con exito.')});
     }
   });
+  // Las siguientes instrucciones solo las utilizo para crear dos registros nuevos
+  // Una vez que esta en producción ser´án eliminados
+  Quiz.findById(2).then(function(quiz){
+     if(!quiz) {
+       Quiz.create({
+         pregunta: 'Capital de Portugal',
+         respuesta: 'Lisboa'
+       }).then(function(){console.log('Añadido nuevo registro.')});
+     }
+   });
+  Quiz.findById(3).then(function(quiz){
+     if(!quiz) {
+       Quiz.create({
+         pregunta: 'Capital de España',
+         respuesta: 'Madrid'
+       }).then(function(){console.log('Añadido nuevo registro.')});
+     }
+   });
 });

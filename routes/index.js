@@ -9,6 +9,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Quiz Creator' });
 });
 
+// Autoload de comandos con :quizId
+// Indica que si en la ruta llega algún parámetro de nombre quizId se ejecute la acción load  del controlador
+// Se tiene que definir antes de cualquier otra petición
+router.param('quizId',quizController.load);
+
 // Configuramos las peticiones GET a la pregunta y a la respuesta
 // para ejecutar las acciones question y answer definidas en el controlador quizController
 // Añadimos la acción index cuando pasamos a mostrar los listados de recursos (mod 7)
