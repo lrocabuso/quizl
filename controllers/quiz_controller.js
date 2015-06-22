@@ -23,7 +23,7 @@ exports.index = function(req, res) {
   // Añadimos % al principio y al final del patron de busqueda y sustituimos los espacios por %
   patron='%'+patron.replace(' ','%')+'%';
   // Ahora obtenemos toda la colección de preguntas ordenado y se la enviamos como un array a la vista index
-  // EL filtrado se puede hacer con where:["pregunta like ?",patron] o where:{pregunta:{like:patron}} 
+  // EL filtrado se puede hacer con where:["pregunta like ?",patron] o where:{pregunta:{like:patron}}
   models.Quiz.findAll({where:{pregunta: {like: patron}}, order: 'pregunta'}).then(function(quizes){
       res.render('quizes/index',{preguntas: quizes, patron: patron});
     })
