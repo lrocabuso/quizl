@@ -18,10 +18,14 @@ exports.load = function(req, res, next, quizId){
 
 // Petición GET /quizes
 exports.index = function(req, res) {
-  // Ahora obtenemos toda la colección de preguntas y se la enviamos como un array
-  // a la vista index
-  models.Quiz.findAll().then(function(quizes){
-      res.render('quizes/index',{preguntas: quizes});
+  // Si no hay query.search inicializamos patron de busqeda a cadena vacia
+  var patron=(req.query.search||'');
+  // Añadimos % al principio y al final del patron de busqueda y sustituimos los espacios por %
+  patron='%'+patron.replace(' ','%')+'%';
+  // Ahora obtenemos toda la colección de preguntas ordenado y se la enviamos como un array a la vista index
+  // EL filtrado se puede hacer con where:["pregunta like ?",patron] o where:{pregunta:{like:patron}} 
+  models.Quiz.findAll({where:{pregunta: {like: patron}}, order: 'pregunta'}).then(function(quizes){
+      res.render('quizes/index',{preguntas: quizes, patron: patron});
     })
     .catch(function(error){  // Añadimos controlador de errores para findAll
       next(error);

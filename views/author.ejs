@@ -12,9 +12,11 @@
       <div class="col-sm-8 col-md-9 col-lg-9">
       <h4>Luis Roca Busó</h4>
 
-      <p>Utilizando el modelo MVC con express, desarrollamos una aplicación de nodejs para realizar preguntas a los
+      <p class="text-justify">Utilizando el modelo MVC con express, desarrollamos una aplicación de nodejs para realizar preguntas a los
          usuarios y contestar a la respuesta con un mensaje que le indique si es correcta o incorrecta.</p>
-      <p>En el módulo 7 se integra con Heroku con la BD Postgress.</p>
+      <p class="text-justify">En el módulo 7 se integra en Heroku con la BD Postgress. Para la correcta integración con Postgress son necesarios los módulos <strong>pg</strong> y <strong>pg-hstore</strong>.<br/>
+         En este módulo se muestra la lista de preguntas extraidas de la base de datos. Para conseguir los datos de la BD se utilizan las funciones de búsqueda de sequelize, utilizando las varibales integradas en las rutas de las que
+         extraeremos las id de cada pregunta. Se recomienda utilizan <em>findById</em> en lugar de <em>find</em> si la búsqeda de información se realiza a partir de la id del registro.</p>
       </div>
       <div class="clearfix"></div>
       <p>&nbsp;</p>
