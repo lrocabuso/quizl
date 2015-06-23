@@ -3,16 +3,20 @@
     <!-- Incluimos la clase hidden-xs de Bootstrap para que se oculte en telefonos -->
     <label for="preg" class="col-lg-2 control-label hidden-xs">Texto pregunta</label>
     <div class="col-lg-10">
-      <!-- Añadimos atributo required de HTML5 para que sea obligatorio rellenar el campo -->
-    <input class="form-control" id="preg" name="quiz[pregunta]" placeholder="<%= quiz.pregunta %>" type="text" required>
+      <!-- Si Añadimos atributo required de HTML5 para que sea obligatorio rellenar el campo
+           nos podíramos ahorrar la validaci´ón a nivel de models de quiz.js
+      -->
+    <input class="form-control" id="preg" name="quiz[pregunta]" placeholder="<%= quiz.pregunta %>" type="text">
     </div>
   </div>
   <div class="form-group">
     <!-- Incluimos la clase hidden-xs de Bootstrap para que se oculte en telefonos -->
     <label for="resp" class="col-lg-2 control-label hidden-xs">Respuesta</label>
     <div class="col-lg-10">
-      <!-- Añadimos atributo required de HTML5 para que sea obligatorio rellenar el campo -->
-    <input class="form-control" id="resp" name="quiz[respuesta]" placeholder="<%= quiz.respuesta %>" type="text" required>
+      <!-- Si Añadimos atributo required de HTML5 para que sea obligatorio rellenar el campo
+           nos podíramos ahorrar la validaci´ón a nivel de models de quiz.js
+      -->
+    <input class="form-control" id="resp" name="quiz[respuesta]" placeholder="<%= quiz.respuesta %>" type="text">
     </div>
   </div>
   <div class="form-group">

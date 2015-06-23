@@ -21,6 +21,11 @@
     </nav>
     <!-- ZONA DE CONTENIDOS -->
     <div class="container">
+      <% if(errors.length) { %>
+      <section  id="serr">
+        <% include ./includes/errores %>
+      </section>
+      <% } %>
       <section  id="s1">
         <%- body %>
       </section>

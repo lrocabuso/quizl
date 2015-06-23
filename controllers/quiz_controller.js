@@ -21,10 +21,18 @@ exports.create = function(req, res){
   // Creamos instancia del objeto quiz utilizando como datos la información enviada por el formulario en el objeto quiz
   // que tiene como propiedades los campos del formulario y sus valores
   var quiz = models.Quiz.build(req.body.quiz);
-  console.log(req.body.quiz);
+
   // Guardamos en la BD los campos pregunta y respusta del formulario
-  quiz.save({fields:["pregunta","respuesta"]}).then(function(){
-    res.redirect('/quizes'); // Redirección HTTP a la página del listado de preguntas
+  quiz
+  .validate()
+  .then(function(err){
+    if(err) {
+      res.render('quizes/new',{quiz: quiz, errors: err.errors});
+    } else {
+      quiz
+      .save({fields:["pregunta","respuesta"]})
+      .then(function(){res.redirect('/quizes');}); // Redirección HTTP a la página del listado de preguntas
+    }
   });
 };
 
@@ -36,7 +44,7 @@ exports.new = function(req, res) {
       respuesta: "Respuesta"
     });
     // Renderizamos la vista new enviandole el objeto quiz creado
-    res.render('quizes/new',{quiz: quiz});
+    res.render('quizes/new',{quiz: quiz, errors: []});
 };
 
 // Petición GET /quizes
@@ -49,7 +57,7 @@ exports.index = function(req, res) {
   // EL filtrado se puede hacer con where:["lower(pregunta) like lower(?)",patron] o where:{pregunta:{like:patron}}
   // Utilizamos la función lower para que no distinguir mayus/minus en el campo y en el parton
   models.Quiz.findAll({where:["lower(pregunta) like lower(?)",patron], order: 'pregunta'}).then(function(quizes){
-      res.render('quizes/index',{preguntas: quizes, patron: patron});
+      res.render('quizes/index',{preguntas: quizes, patron: patron, errors: []});
     })
     .catch(function(error){  // Añadimos controlador de errores para findAll
       next(error);
@@ -59,7 +67,7 @@ exports.index = function(req, res) {
 // Petición GET /quizes/:quizId
 exports.show = function(req, res){
   // Desde el momento que creamos la acción de load el objet quiz viene como propiedad de req
-      res.render('quizes/show',{pregunta: req.quiz});
+      res.render('quizes/show',{pregunta: req.quiz, errors: []});
 };
 
 // Petición GET /quizes/:quizId/answer
@@ -72,5 +80,5 @@ exports.answer = function(req, res){
         tipo_panel = 'panel-warning';
       }
       // Enviamos como variable la id de la pregunta para poder volver a la misma que se ha contestado
-      res.render('quizes/answer',{pregunta: req.quiz, respuesta: msg, tipopanel: tipo_panel});
+      res.render('quizes/answer',{pregunta: req.quiz, respuesta: msg, tipopanel: tipo_pane, errors: []});
 };
