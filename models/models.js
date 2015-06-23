@@ -45,29 +45,10 @@ sequelize.sync().then(function(){
   // Obtenemos el total de registros que tiene la Quiz
   Quiz.count().then(function(count){
     if(count===0){ // La tabla se inicializará sólo si está vaciá
-      // Agragamos un registro y mostramos mensaje por consola si to ha ido bien
-      Quiz.create({
-        pregunta: 'Capital de Italia',
-        respuesta: 'Roma'
-      }).then(function(){console.log('Base de datos inicializada con exito.')});
+      // Agragamos tres registro y mostramos mensaje por consola si to ha ido bien
+      Quiz.create({pregunta: 'Capital de Italia',respuesta: 'Roma'});
+      Quiz.create({pregunta: 'Capital de Portugal',respuesta: 'Lisboa'});
+      Quiz.create({pregunta: 'Capital de España',respuesta: 'Madrid'}).then(function(){console.log('Base de datos inicializada con exito.')});
     }
   });
-  // Las siguientes instrucciones solo las utilizo para crear dos registros nuevos
-  // Una vez que esta en producción ser´án eliminados
-  Quiz.findById(2).then(function(quiz){
-     if(!quiz) {
-       Quiz.create({
-         pregunta: 'Capital de Portugal',
-         respuesta: 'Lisboa'
-       }).then(function(){console.log('Añadido nuevo registro.')});
-     }
-   });
-  Quiz.findById(3).then(function(quiz){
-     if(!quiz) {
-       Quiz.create({
-         pregunta: 'Capital de España',
-         respuesta: 'Madrid'
-       }).then(function(){console.log('Añadido nuevo registro.')});
-     }
-   });
 });

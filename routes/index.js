@@ -28,6 +28,11 @@ router.get('/quizes/:quizId(\\d+)/answer',quizController.answer);
 // la petición POST para la respuesta de la siguiente manera
 // router.post('/quizes/answer',quizController.answer);
 
+// Configuramos middleware que atiende a la petición de crear pregunta
+router.get('/quizes/new',quizController.new);
+// Configuramos middleware que atiende a la petición de guardar pregunta utilizando el metodo POST
+router.post('/quizes/create',quizController.create);
+
 // GET pagina de author
 router.get('/author',function(req, res, next) {
     res.render('author', { });

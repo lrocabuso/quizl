@@ -16,15 +16,39 @@ exports.load = function(req, res, next, quizId){
   });
 };
 
+// Petición POST /create
+exports.create = function(req, res){
+  // Creamos instancia del objeto quiz utilizando como datos la información enviada por el formulario en el objeto quiz
+  // que tiene como propiedades los campos del formulario y sus valores
+  var quiz = models.Quiz.build(req.body.quiz);
+  console.log(req.body.quiz);
+  // Guardamos en la BD los campos pregunta y respusta del formulario
+  quiz.save({fields:["pregunta","respuesta"]}).then(function(){
+    res.redirect('/quizes'); // Redirección HTTP a la página del listado de preguntas
+  });
+};
+
+// Petición GET /new
+exports.new = function(req, res) {
+    // Creamos una nueva instancia del objeto quiz (registro de la BD) con unos valores iniciales
+    var quiz = models.Quiz.build({
+      pregunta: "Pregunta",
+      respuesta: "Respuesta"
+    });
+    // Renderizamos la vista new enviandole el objeto quiz creado
+    res.render('quizes/new',{quiz: quiz});
+};
+
 // Petición GET /quizes
 exports.index = function(req, res) {
   // Si no hay query.search inicializamos patron de busqeda a cadena vacia
   var patron=(req.query.search||'');
   // Añadimos % al principio y al final del patron de busqueda y sustituimos los espacios por %
-  patron='%'+patron.replace(' ','%')+'%';
+  patron='%'+patron.replace(/\b/g ,'%')+'%';
   // Ahora obtenemos toda la colección de preguntas ordenado y se la enviamos como un array a la vista index
-  // EL filtrado se puede hacer con where:["pregunta like ?",patron] o where:{pregunta:{like:patron}}
-  models.Quiz.findAll({where:{pregunta: {like: patron}}, order: 'pregunta'}).then(function(quizes){
+  // EL filtrado se puede hacer con where:["lower(pregunta) like lower(?)",patron] o where:{pregunta:{like:patron}}
+  // Utilizamos la función lower para que no distinguir mayus/minus en el campo y en el parton
+  models.Quiz.findAll({where:["lower(pregunta) like lower(?)",patron], order: 'pregunta'}).then(function(quizes){
       res.render('quizes/index',{preguntas: quizes, patron: patron});
     })
     .catch(function(error){  // Añadimos controlador de errores para findAll

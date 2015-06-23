@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Crear pregunta</h3>
+    </div>
+    <div class="panel-body">
+    <!-- los datos del formulario se los enviaremos en el cuerpo de la transaccion a la accion create del controlador -->
+    <form method="POST" action="/quizes/create" class="form-horizontal">
+      <% include _form.ejs %>
+    </form>
+    </div>
+</div>

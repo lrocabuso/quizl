@@ -1,0 +1,25 @@
+<fieldset>
+  <div class="form-group">
+    <!-- Incluimos la clase hidden-xs de Bootstrap para que se oculte en telefonos -->
+    <label for="preg" class="col-lg-2 control-label hidden-xs">Texto pregunta</label>
+    <div class="col-lg-10">
+      <!-- Añadimos atributo required de HTML5 para que sea obligatorio rellenar el campo -->
+    <input class="form-control" id="preg" name="quiz[pregunta]" placeholder="<%= quiz.pregunta %>" type="text" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <!-- Incluimos la clase hidden-xs de Bootstrap para que se oculte en telefonos -->
+    <label for="resp" class="col-lg-2 control-label hidden-xs">Respuesta</label>
+    <div class="col-lg-10">
+      <!-- Añadimos atributo required de HTML5 para que sea obligatorio rellenar el campo -->
+    <input class="form-control" id="resp" name="quiz[respuesta]" placeholder="<%= quiz.respuesta %>" type="text" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-10 col-lg-offset-2">
+    <a type="button" class="btn btn-default" href='/quizes'>Volver</a>
+    <button type="reset" class="btn btn-warning">Borrar datos</button>
+    <button type="submit" class="btn btn-primary">Guardar pregunta</button>
+    </div>
+  </div>
+</fieldset>

@@ -16,7 +16,7 @@
     </form>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">Seleccione una pregunta</h3>
+        <h3 class="panel-title">Seleccione una pregunta (<span class="badge"><%= preguntas.length %></span>)</h3>
       </div>
       <div class="panel-body">
       <!-- Utilizamos div responsive para que la tabla se pueda adaptar a los dispositivos moviles-->
@@ -31,6 +31,7 @@
       </div>
       </div>
   </div>
+  <a type="button" class="btn btn-default" href='/quizes/new'>Crear pregunta</a>
   <% if(patron !== '%%') { %>
     <a type="button" class="btn btn-warning" href='/quizes'>Borrar filtro</a>
   <% } %>
