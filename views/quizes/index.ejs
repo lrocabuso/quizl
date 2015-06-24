@@ -24,7 +24,7 @@
         <table class="table">
           <tbody>
           <% var a; for(i=0; i < preguntas.length; i++) { %>
-            <tr><td><a href='quizes/<%= preguntas[i].id %>'><%= preguntas[i].pregunta %></a></td></tr>
+            <tr><td><a href='/quizes/<%= preguntas[i].id %>/edit'><span class='glyphicon glyphicon-edit' rel="popover" data-trigger="hover" data-content="Editar"></span></a>&nbsp;&nbsp;&nbsp;<a href='quizes/<%= preguntas[i].id %>'><%= preguntas[i].pregunta %></a></td></tr>
           <% } %>
         </tbody>
         </table>

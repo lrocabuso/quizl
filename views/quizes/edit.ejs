@@ -1,0 +1,11 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Editar pregunta</h3>
+    </div>
+    <div class="panel-body">
+    <!-- los datos del formulario se los enviaremos en el cuerpo de la transacción a la acción update del controlador -->
+    <form method="POST" action="/quizes/<%= quiz.id %>?_method=put" class="form-horizontal">
+      <% include _form.ejs %>
+    </form>
+    </div>
+</div>

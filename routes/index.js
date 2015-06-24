@@ -32,6 +32,10 @@ router.get('/quizes/:quizId(\\d+)/answer',quizController.answer);
 router.get('/quizes/new',quizController.new);
 // Configuramos middleware que atiende a la petición de guardar pregunta utilizando el metodo POST
 router.post('/quizes/create',quizController.create);
+// Configuramos filtro que atiende a la petición de editar pregunta utilizando el metodo GET
+router.get('/quizes/:quizId(\\d+)/edit',quizController.edit);
+// Configuramos filtro que atiende a la petición de actualizar pregunta utilizando el metodo PUT
+router.put('/quizes/:quizId(\\d+)',quizController.update);
 
 // GET pagina de author
 router.get('/author',function(req, res, next) {

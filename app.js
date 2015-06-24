@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 // incluir modulo para generar vistas parciales
 var partials = require('express-partials');
+// Incluir modulo para realizar conversiones de POST a PUT
+var methodOverride = require('method-override');
 
 var routes = require('./routes/index');
 
@@ -23,6 +25,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
+app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);

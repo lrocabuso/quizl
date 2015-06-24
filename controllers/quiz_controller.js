@@ -16,6 +16,37 @@ exports.load = function(req, res, next, quizId){
   });
 };
 
+// Petición GET /quizes/:quizId/edit
+exports.edit = function(req, res) {
+    // Obtenemos el objeto quiz (registro de la BD) cargado por la acción load
+    var quiz = req.quiz;
+    // Renderizamos la vista edit enviandole el objeto quiz leido
+    res.render('quizes/edit',{quiz: quiz, errors: []});
+};
+
+// Petición PUT /quizes/:quizId
+exports.update = function(req, res){
+  // Actualizamos los campos del objeto quiz obtenido por la acción load con los valores de los campos del formulario
+  req.quiz.pregunta = req.body.quiz.pregunta;
+  req.quiz.respuesta = req.body.quiz.respuesta;
+
+  // Guardamos en la BD los campos pregunta y respusta del formulario
+  req
+  .quiz
+  .validate()
+  .then(function(err){
+    if(err) {
+      // Si se produce un error, rederizamos de nuevo el formulario con los datos que venian del formulario
+      res.render('quizes/edit',{quiz: req.quiz, errors: err.errors});
+    } else {
+      req
+      .quiz
+      .save({fields:["pregunta","respuesta"]})
+      .then(function(){res.redirect('/quizes');}); // Redirección HTTP a la página del listado de preguntas
+    }
+  });
+};
+
 // Petición POST /create
 exports.create = function(req, res){
   // Creamos instancia del objeto quiz utilizando como datos la información enviada por el formulario en el objeto quiz
@@ -40,8 +71,8 @@ exports.create = function(req, res){
 exports.new = function(req, res) {
     // Creamos una nueva instancia del objeto quiz (registro de la BD) con unos valores iniciales
     var quiz = models.Quiz.build({
-      pregunta: "Pregunta",
-      respuesta: "Respuesta"
+      pregunta: "",
+      respuesta: ""
     });
     // Renderizamos la vista new enviandole el objeto quiz creado
     res.render('quizes/new',{quiz: quiz, errors: []});
