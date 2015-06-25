@@ -36,6 +36,8 @@ router.post('/quizes/create',quizController.create);
 router.get('/quizes/:quizId(\\d+)/edit',quizController.edit);
 // Configuramos filtro que atiende a la petición de actualizar pregunta utilizando el metodo PUT
 router.put('/quizes/:quizId(\\d+)',quizController.update);
+// Configuramos filtro que atiende a la petición de eliminar pregunta utilizando el metodo DELETE
+router.delete('/quizes/:quizId(\\d+)',quizController.destroy);
 
 // GET pagina de author
 router.get('/author',function(req, res, next) {

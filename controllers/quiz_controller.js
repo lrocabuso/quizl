@@ -24,6 +24,16 @@ exports.edit = function(req, res) {
     res.render('quizes/edit',{quiz: quiz, errors: []});
 };
 
+// Petición DELETE /quizes/:quizId
+exports.destroy = function(req, res){
+  req.quiz.destroy().then(function () {
+    res.redirect('/quizes');
+  })
+  .catch(function(error){  // Añadimos controlador de errores para destroy
+    next(error);
+  });
+};
+
 // Petición PUT /quizes/:quizId
 exports.update = function(req, res){
   // Actualizamos los campos del objeto quiz obtenido por la acción load con los valores de los campos del formulario
@@ -42,7 +52,10 @@ exports.update = function(req, res){
       req
       .quiz
       .save({fields:["pregunta","respuesta"]})
-      .then(function(){res.redirect('/quizes');}); // Redirección HTTP a la página del listado de preguntas
+      .then(function(){res.redirect('/quizes');}) // Redirección HTTP a la página del listado de preguntas
+      .catch(function(error){  // Añadimos controlador de errores para save
+        next(error);
+      });
     }
   });
 };
@@ -111,5 +124,5 @@ exports.answer = function(req, res){
         tipo_panel = 'panel-warning';
       }
       // Enviamos como variable la id de la pregunta para poder volver a la misma que se ha contestado
-      res.render('quizes/answer',{pregunta: req.quiz, respuesta: msg, tipopanel: tipo_pane, errors: []});
+      res.render('quizes/answer',{pregunta: req.quiz, respuesta: msg, tipopanel: tipo_panel, errors: []});
 };

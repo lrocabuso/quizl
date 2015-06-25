@@ -7,3 +7,18 @@ body {margin-bottom: 40px;}
 /* Clases para mostrar videos adaptativos */
 .video-container {position: relative;padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden;}
 .video-container iframe,.video-container object,.video-container embed { position: absolute;top: 0;left: 0;width: 100%;height: 100%;}
+/* Texto adaptativo con media querys */
+@media screen and (max-width: 991px) {
+  p,.btn,input,div,span,h4, .jumbotron p {font-size: 98%; }
+  h1 {font-size: 31px;}
+  h2 {font-size: 27px;}
+  h3 {font-size: 24px;}
+  h4 {font-size: 20px;}
+}
+@media screen and (max-width: 767px) {
+  p,.btn,input,div,span,h4,.jumbotron p {font-size: 96% !important;}
+  h1 {font-size: 25px !important;}
+  h2 {font-size: 21px !important;}
+  h3 {font-size: 17px !important;}
+  h4 {font-size: 13px !important;}
+}

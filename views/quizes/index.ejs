@@ -4,11 +4,11 @@
     <form method="GET" action="/quizes" class="form-horizontal">
     <fieldset>
       <div class="form-group">
-        <label for="search" class="col-lg-2 col-md-2 control-label">Buscar preguntas </label>
-        <div class="col-lg-8 col-md-8">
+        <label for="search" class="col-lg-2 col-md-2 col-sm-2 hidden-xs control-label">Buscar preguntas </label>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
         <input class="form-control" id="search" name="search" placeholder="Introduce patrón de búsqueda" type="text" required>
         </div>
-        <div class="col-lg-2 col-md-2">
+        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
         <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-search'></span></button>
         </div>
       </div>
@@ -24,7 +24,15 @@
         <table class="table">
           <tbody>
           <% var a; for(i=0; i < preguntas.length; i++) { %>
-            <tr><td><a href='/quizes/<%= preguntas[i].id %>/edit'><span class='glyphicon glyphicon-edit' rel="popover" data-trigger="hover" data-content="Editar"></span></a>&nbsp;&nbsp;&nbsp;<a href='quizes/<%= preguntas[i].id %>'><%= preguntas[i].pregunta %></a></td></tr>
+            <tr>
+                <td width='90%'><a href='quizes/<%= preguntas[i].id %>' type="button" class="btn btn-sm btn-default btn-block"><%= preguntas[i].pregunta %></a></td>
+                <td width='5%'><a href='/quizes/<%= preguntas[i].id %>/edit' type="button" class="btn btn-sm btn-primary"><span class='glyphicon glyphicon-edit' rel="popover" data-trigger="hover" data-content="Editar"></span></a></td>
+                <td width='5%'>
+                  <form method="POST" action="/quizes/<%= preguntas[i].id %>?_method=delete">
+                  <button type="submit" class="btn btn-sm btn-danger" onClick="return confirm('Borrar: <%= preguntas[i].pregunta %>');"><span class='glyphicon glyphicon-trash' rel="popover" data-trigger="hover" data-content="Eliminar"></span></button>
+                </form>
+                </td>
+            </tr>
           <% } %>
         </tbody>
         </table>
