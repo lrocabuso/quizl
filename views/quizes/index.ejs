@@ -4,28 +4,40 @@
     <form method="GET" action="/quizes" class="form-horizontal">
     <fieldset>
       <div class="form-group">
-        <label for="search" class="col-lg-2 col-md-2 col-sm-2 hidden-xs control-label">Buscar preguntas </label>
-        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
-        <input class="form-control" id="search" name="search" placeholder="Introduce patrón de búsqueda" type="text" required>
+        <div class="input-group col-lg-8 col-md-8 col-sm-8 col-xs-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
+        <span class='glyphicon glyphicon-search input-group-addon'></span>
+        <input class="form-control" name="search" placeholder="Introduce patrón de búsqueda" type="text" required>
         </div>
-        <div class="col-lg-2 col-md-2 col-sm-2 col-xs-1">
-        <button type="submit" class="btn btn-primary"><span class='glyphicon glyphicon-search'></span></button>
-        </div>
+        <input type="hidden" name="field" value="p">
       </div>
     </fieldset>
     </form>
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title">Seleccione una pregunta (<span class="badge"><%= preguntas.length %></span>)</h3>
+        <form method="GET" action="/quizes" class="form-horizontal" id="frm_tema">
+        <fieldset>
+          <span>Seleccione tema: </span>
+          <select name="search" class="btn-primary" onchange="frm_tema.submit();">
+            <option value=''></option>
+            <option value='Otro'>Otro</option>
+            <option value='Humanidades'>Humanidades</option>
+            <option value='Ocio'>Ocio</option>
+            <option value='Ciencia'>Ciencia</option>
+            <option value='Tecnología'>Tecnología</option>
+          </select>
+          <input type="hidden" name="field" value="t">
+        </fieldset>
+        </form>
       </div>
       <div class="panel-body">
       <!-- Utilizamos div responsive para que la tabla se pueda adaptar a los dispositivos moviles-->
       <div class="table-responsive">
+        <small>Preguntas (<span class="badge"><%= preguntas.length %></span>)</small>
         <table class="table">
           <tbody>
           <% var a; for(i=0; i < preguntas.length; i++) { %>
             <tr>
-                <td width='90%'><a href='quizes/<%= preguntas[i].id %>' type="button" class="btn btn-sm btn-default btn-block"><%= preguntas[i].pregunta %></a></td>
+                <td width='90%'><a href='quizes/<%= preguntas[i].id %>' type="button" class="btn btn-sm btn-default btn-block" rel="popover" data-trigger="hover" data-content="<%= preguntas[i].tema %>"><%= preguntas[i].pregunta %></a></td>
                 <td width='5%'><a href='/quizes/<%= preguntas[i].id %>/edit' type="button" class="btn btn-sm btn-primary"><span class='glyphicon glyphicon-edit' rel="popover" data-trigger="hover" data-content="Editar"></span></a></td>
                 <td width='5%'>
                   <form method="POST" action="/quizes/<%= preguntas[i].id %>?_method=delete">
@@ -40,7 +52,7 @@
       </div>
   </div>
   <a type="button" class="btn btn-default" href='/quizes/new'>Crear pregunta</a>
-  <% if(patron !== '%%') { %>
+  <% if(borrar_filtro) { %>
     <a type="button" class="btn btn-warning" href='/quizes'>Borrar filtro</a>
   <% } %>
   </div>

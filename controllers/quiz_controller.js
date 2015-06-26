@@ -39,6 +39,7 @@ exports.update = function(req, res){
   // Actualizamos los campos del objeto quiz obtenido por la acción load con los valores de los campos del formulario
   req.quiz.pregunta = req.body.quiz.pregunta;
   req.quiz.respuesta = req.body.quiz.respuesta;
+  req.quiz.tema = req.body.quiz.tema;
 
   // Guardamos en la BD los campos pregunta y respusta del formulario
   req
@@ -51,7 +52,7 @@ exports.update = function(req, res){
     } else {
       req
       .quiz
-      .save({fields:["pregunta","respuesta"]})
+      .save({fields:["pregunta","respuesta","tema"]})
       .then(function(){res.redirect('/quizes');}) // Redirección HTTP a la página del listado de preguntas
       .catch(function(error){  // Añadimos controlador de errores para save
         next(error);
@@ -61,7 +62,7 @@ exports.update = function(req, res){
 };
 
 // Petición POST /create
-exports.create = function(req, res){
+exports.create = function(req, res, next){
   // Creamos instancia del objeto quiz utilizando como datos la información enviada por el formulario en el objeto quiz
   // que tiene como propiedades los campos del formulario y sus valores
   var quiz = models.Quiz.build(req.body.quiz);
@@ -74,8 +75,11 @@ exports.create = function(req, res){
       res.render('quizes/new',{quiz: quiz, errors: err.errors});
     } else {
       quiz
-      .save({fields:["pregunta","respuesta"]})
-      .then(function(){res.redirect('/quizes');}); // Redirección HTTP a la página del listado de preguntas
+      .save({fields:["pregunta","respuesta","tema"]})
+      .then(function(){res.redirect('/quizes');})  // Redirección HTTP a la página del listado de preguntas
+      .catch(function(error){  // Añadimos controlador de errores para findAll
+        next(error);
+      });
     }
   });
 };
@@ -85,23 +89,44 @@ exports.new = function(req, res) {
     // Creamos una nueva instancia del objeto quiz (registro de la BD) con unos valores iniciales
     var quiz = models.Quiz.build({
       pregunta: "",
-      respuesta: ""
+      respuesta: "",
+      tema: ""
     });
     // Renderizamos la vista new enviandole el objeto quiz creado
     res.render('quizes/new',{quiz: quiz, errors: []});
 };
 
 // Petición GET /quizes
-exports.index = function(req, res) {
-  // Si no hay query.search inicializamos patron de busqeda a cadena vacia
-  var patron=(req.query.search||'');
-  // Añadimos % al principio y al final del patron de busqueda y sustituimos los espacios por %
-  patron='%'+patron.replace(/\b/g ,'%')+'%';
+exports.index = function(req, res, next) {
+
+  // Objeto que utilizaremos como argumento de la función findAll
+  var Objfind = {order: 'pregunta'};
+  // Obtenemos los valores de las variables que pueden venir en la query
+  // Si no hay valores inicializamos variables search de busqeda a cadena vacia
+  var patron_search=(req.query.search||'');
+  var tipo_search=(req.query.field||'');
+  // Indicador para mostrar botón de borrar filtro
+  var borrar_filtro=true;
+  // Evaluamos la variable tipo para saber si la búsqueda se realiza por campo (p) o por tema (t)
+  switch (tipo_search) {
+    case 'p':
+        // Añadimos % a ambos lados de la expresión y sustituimos los espacios por %
+        patron_search='%'+patron_search.replace(/\b/g ,'%')+'%';
+        // Creamos propiedad del objeto Objfind con condición where
+        Objfind.where = ["lower(pregunta) like lower(?)",patron_search];
+      break;
+    case 't':
+        // Creamos propiedad del objeto Objfind con condición where
+        Objfind.where = ["tema=?",patron_search];
+      break;
+    default:
+        // Si no llegan variables en la petición GET, ocultamos el bot´ón de borrar filtro y no se crea condición WHERE
+        borrar_filtro=false;
+  }
+
   // Ahora obtenemos toda la colección de preguntas ordenado y se la enviamos como un array a la vista index
-  // EL filtrado se puede hacer con where:["lower(pregunta) like lower(?)",patron] o where:{pregunta:{like:patron}}
-  // Utilizamos la función lower para que no distinguir mayus/minus en el campo y en el parton
-  models.Quiz.findAll({where:["lower(pregunta) like lower(?)",patron], order: 'pregunta'}).then(function(quizes){
-      res.render('quizes/index',{preguntas: quizes, patron: patron, errors: []});
+  models.Quiz.findAll(Objfind).then(function(quizes){
+      res.render('quizes/index',{preguntas: quizes, borrar_filtro: borrar_filtro, errors: []});
     })
     .catch(function(error){  // Añadimos controlador de errores para findAll
       next(error);

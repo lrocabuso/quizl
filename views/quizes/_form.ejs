@@ -1,6 +1,19 @@
 <fieldset>
   <div class="form-group">
     <!-- Incluimos la clase hidden-xs de Bootstrap para que se oculte en telefonos -->
+    <label for="tem" class="col-lg-2 control-label hidden-xs">Tema</label>
+    <div class="col-lg-10">
+      <select id='tem' name="quiz[tema]" class="form-control">
+        <option value='Otro'        <% if(quiz.tema.toLowerCase()==='otro'){ %> selected <% } %>>Otro</option>
+        <option value='Humanidades' <% if(quiz.tema.toLowerCase()==='humanidades'){ %> selected <% } %>>Humanidades</option>
+        <option value='Ocio'        <% if(quiz.tema.toLowerCase()==='ocio'){ %> selected <% } %>>Ocio</option>
+        <option value='Ciencia'     <% if(quiz.tema.toLowerCase()==='ciencia'){ %> selected <% } %>>Ciencia</option>
+        <option value='Tecnología'  <% if(quiz.tema.toLowerCase()==='tecnología'){ %> selected <% } %>>Tecnología</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <!-- Incluimos la clase hidden-xs de Bootstrap para que se oculte en telefonos -->
     <label for="preg" class="col-lg-2 control-label hidden-xs">Texto pregunta</label>
     <div class="col-lg-10">
       <!-- Si Añadimos atributo required de HTML5 para que sea obligatorio rellenar el campo

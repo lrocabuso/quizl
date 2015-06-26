@@ -46,9 +46,9 @@ sequelize.sync().then(function(){
   Quiz.count().then(function(count){
     if(count===0){ // La tabla se inicializará sólo si está vaciá
       // Agragamos tres registro y mostramos mensaje por consola si to ha ido bien
-      Quiz.create({pregunta: 'Capital de Italia',respuesta: 'Roma'});
-      Quiz.create({pregunta: 'Capital de Portugal',respuesta: 'Lisboa'});
-      Quiz.create({pregunta: 'Capital de España',respuesta: 'Madrid'}).then(function(){console.log('Base de datos inicializada con exito.')});
+      Quiz.create({pregunta: 'Capital de Italia',respuesta: 'Roma', tema:'humanidades'});
+      Quiz.create({pregunta: 'Capital de Portugal',respuesta: 'Lisboa', tema:'humanidades'});
+      Quiz.create({pregunta: 'Capital de España',respuesta: 'Madrid', tema:'humanidades'}).then(function(){console.log('Base de datos inicializada con exito.')});
     }
   });
 });
