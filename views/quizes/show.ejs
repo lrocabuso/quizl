@@ -24,5 +24,19 @@
       </div>
     </fieldset>
     </form>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Comentarios &nbsp;&nbsp;&nbsp;
+          <a type="button" class="btn btn-success btn-sm" href='/quizes/<%= pregunta.id %>/comments/new'>
+              <span class='glyphicon glyphicon-list' rel="popover" data-trigger="hover" data-content="Nuevo Comentario"></span>
+          </a>
+        </h4>
+      </div>
+      <div class="panel-body">
+        <% for(index in pregunta.Comments){ %>
+          <p><%= pregunta.Comments[index].texto %></p>
+        <% } %>
+      </div>
+    </div>
     </div>
 </div>

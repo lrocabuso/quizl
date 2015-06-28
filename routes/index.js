@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 // Importamos el enrutador de las preguntas
 var quizController = require('../controllers/quiz_controller');
+// Importamos el enrutador de las comentarios
+var commentController = require('../controllers/comment_controller');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -38,6 +40,11 @@ router.get('/quizes/:quizId(\\d+)/edit',quizController.edit);
 router.put('/quizes/:quizId(\\d+)',quizController.update);
 // Configuramos filtro que atiende a la petición de eliminar pregunta utilizando el metodo DELETE
 router.delete('/quizes/:quizId(\\d+)',quizController.destroy);
+
+// Configuramos filtro que atiende a la petición de crear nuevo comentario
+router.get('/quizes/:quizId(\\d+)/comments/new',commentController.new);
+// Configuramos middleware que atiende a la petición de guardar comentario utilizando el metodo POST
+router.post('/quizes/:quizId(\\d+)/comments',commentController.create);
 
 // GET pagina de author
 router.get('/author',function(req, res, next) {

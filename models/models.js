@@ -35,9 +35,17 @@ var sequelize = new Sequelize(DB_name, user, pwd,
 
 // Importar la definición de la tabla Quiz definida en el fichero quiz.js
 var Quiz = sequelize.import(path.join(__dirname,'quiz'));
+// Importar la definición de la tabla Comment definida en el fichero comment.js
+var Comment = sequelize.import(path.join(__dirname,'comment'));
+
+// Definimos las relaciones entre tablas 1 (quiz) - N (comment)
+Comment.belongsTo(Quiz);
+Quiz.hasMany(Comment);
 
 // exportamos el modelo con la definicion de la tabla Quiz
 exports.Quiz = Quiz;
+// exportamos el modelo con la definicion de la tabla Comment
+exports.Comment = Comment;
 
 // Comprobamos la cantidad de registros de la tabla Quiz que nos servira para incializar la BD
 // .success es la forma antigua de crear un callback si se realiza la sincronización
