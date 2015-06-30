@@ -4,6 +4,8 @@ var router = express.Router();
 var quizController = require('../controllers/quiz_controller');
 // Importamos el enrutador de las comentarios
 var commentController = require('../controllers/comment_controller');
+// Importamos el enrutador de las sesiones
+var sessionController = require('../controllers/session_controller');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -15,6 +17,12 @@ router.get('/', function(req, res, next) {
 // Indica que si en la ruta llega algún parámetro de nombre quizId se ejecute la acción load  del controlador
 // Se tiene que definir antes de cualquier otra petición
 router.param('quizId',quizController.load);
+
+
+//  Definición de rutas de session
+router.get('/login',sessionController.new);         // formulario
+router.post('/login',sessionController.create);     // crear
+router.delete('/logout',sessionController.destroy); // destruir
 
 // Configuramos las peticiones GET a la pregunta y a la respuesta
 // para ejecutar las acciones question y answer definidas en el controlador quizController

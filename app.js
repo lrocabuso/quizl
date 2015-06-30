@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var partials = require('express-partials');
 // Incluir modulo para realizar conversiones de POST a PUT
 var methodOverride = require('method-override');
+// Incluir modulo para gestión de sesiones
+var session = require('express-session');
 
 var routes = require('./routes/index');
 
@@ -23,10 +25,24 @@ app.use(partials());
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
-app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser('Quizl-Luis 2015'));
+app.use(session({ secret: 'Quizl-Luis 2015', resave: true, saveUninitialized: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Helpers dinámicos (muy importante declararlos antes de la directiva app.use('/',routes))
+app.use(function(req, res, next){
+  // Si no existe la propiedad redir (variable de sesion) la inicializa
+  if (!req.session.redir) { req.session.redir = '/';  }
+  // Guardamos la URL completa en session.redir para despues del login hacer el redirect de forma correcta
+  // Si guardamos solo el path, cuando estamos en peticiones que lleven variables no se devuelven las variables y da error
+  if(!req.path.match(/\/login|\/logout/)){req.session.redir = req.originalUrl; }
+  // Hacemos visible session.redir para las vistas utilizando una variable local
+  // Desde cualquier vista se podrá acceder a la sesión haciendo referencia al objeto session
+  res.locals.session = req.session;
+  next();
+});
 
 app.use('/', routes);
 

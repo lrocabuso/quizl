@@ -7,6 +7,15 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
+    <% if(!(session.user)){ %>
+      <form method="GET" action="/login"  id="frm_login" class="form-horizontal navbar-brand">
+      <span onclick='frm_login.submit();' class='glyphicon glyphicon-user puntero' rel="popover" data-trigger="hover" data-content="Login"></span>
+    </form>
+    <% } else { %>
+      <form method="POST" action="/logout?_method=delete"  id="frm_logout" class="form-horizontal navbar-brand">
+      <span onclick="frm_logout.submit();" class='glyphicon glyphicon-off puntero' rel="popover" data-trigger="hover" data-content="Logout <%= session.user.username %>"></span>
+      </form>
+    <% } %>
     <a class="navbar-brand" href="/author">Autor</a>
   </div>
   <!-- Ordenes del menú de navegación -->

@@ -1,0 +1,30 @@
+<div class="rows">
+<div class='col-lg-4 col-lg-offset-4'>
+  <div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Inicio Sesión</h3>
+  </div>
+  <div class="panel-body">
+    <form method="POST" action="/login" class="form-horizontal">
+    <fieldset>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
+        <!-- Añadimos atributo required de HTML5 para que sea obligatorio rellenar el campo -->
+        <input class="form-control" id="login" name="login" placeholder="usuario" type="text" required>
+      </div>
+      <br/>
+      <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
+        <!-- Añadimos atributo required de HTML5 para que sea obligatorio rellenar el campo -->
+        <input class="form-control" id="passwd" name="passwd" placeholder="clave" type="password" required>
+      </div>
+      <br/>
+      <div class="col-lg-4 col-lg-offset-4">
+        <button type="submit" class="btn btn-primary">Enviar</button>
+      </div>
+      </fieldset>
+    </form>
+  </div>
+  </div>
+</div>
+</div>

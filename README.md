@@ -90,6 +90,33 @@ Práctica final módulo
 - Guardar los cambios.
 - Desplegar los nuevos cambios en nuestra aplicación de Heroku.
 
+Módulo 9 (Relaciones, Sesiones y Protocolo HTTPS)
+-------------------------------------------------------------------------------------------------------------
+### Paquetes instalados:
+
+![SESSION Version][express-session-image]
+
+En este último módulo vemos como crear relaciones entre las tablas de la BD utilizando los métodos que define sequelize. También vemos el tratamiento de sesiones de trabajo con autenticación de usuarios por medio del paquete express-session, donde se nos enseña como crear y destruir sesiones de trabajo, como realizar la validación de usuarios y la autorización de trabajo.
+
+
+
+- Crear nuevo modelo para la tabla de comentarios.
+- Definir la relación 1->N entre quizs y comments.
+- Crear controlador asociado al nuevo modelo con las acciones new y create.
+- Crear filtros en el router index para atender las nuevas peticiones sobre comentarios.
+- Mostrar la lista de comentarios asociados a una pregunta en la vista answer.
+- Añadir enlace que permita crear un nuevo comentario.
+- Crear formulario para introducir el texto del comentario en views/comments
+- - - -
+- Instalar paquete express-session para el control de sesiones de trabajo.
+- Importar, iniciar y hacer visibles las sesiones desde app.js.
+- Crear filtros para las peticiones de login y logout en el router principal.
+- Crear controlador de sesiones session_controller.
+- Crear controlador de usuarios para realizar la autenticación.
+- Modificar el interface de trabajo para iniciar/cerrar sesión.
+- Crear nueva vista para el formulario de inicio de sesión.
+
+
 
 [node-image]: https://img.shields.io/badge/node-0.12.4-blue.svg
 [npm-image]: https://img.shields.io/npm/v/npm.svg
@@ -108,3 +135,4 @@ Práctica final módulo
 [method-override-image]:https://img.shields.io/badge/method--override-2.3.3-green.svg
 [heroku-toolbelt-image]:https://img.shields.io/badge/heroku--toolbelt-3.38.2-red.svg
 [foreman-image]:https://img.shields.io/badge/foreman-0.78.0-blue.svg
+[express-session-image]:https://img.shields.io/badge/express--session-1.11.3-green.svg
