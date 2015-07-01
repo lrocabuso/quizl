@@ -18,45 +18,28 @@ router.get('/', function(req, res, next) {
 // Se tiene que definir antes de cualquier otra petición
 router.param('quizId',quizController.load);
 
-
 //  Definición de rutas de session
 router.get('/login',sessionController.new);         // formulario
 router.post('/login',sessionController.create);     // crear
 router.delete('/logout',sessionController.destroy); // destruir
 
-// Configuramos las peticiones GET a la pregunta y a la respuesta
-// para ejecutar las acciones question y answer definidas en el controlador quizController
-// Añadimos la acción index cuando pasamos a mostrar los listados de recursos (mod 7)
-// Se utiliza como nombre de la acción 'index' para mostrar el listado de registros por convenio con Rails
+// Definición de rutas para quiz
 router.get('/quizes',quizController.index);
-// Cambiamos los middlewares de preguntas y respuestas para enviar la id del registro al que se accede
-// utilizar las expresiones regulares para crear la ruta get (mod 7)
-// Se utiliza como nombre de la acción 'show' para mostrar el contenido de un registro por convenio con Rails
 router.get('/quizes/:quizId(\\d+)',quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer',quizController.answer);
-// Si quisieramos enviar las respuestas en el cuerpo del documento tendriamos que utilizar
-// la petición POST para la respuesta de la siguiente manera
-// router.post('/quizes/answer',quizController.answer);
+router.get('/quizes/new',sessionController.LoginRequired,quizController.new);
+router.post('/quizes/create',sessionController.LoginRequired,quizController.create);
+router.get('/quizes/:quizId(\\d+)/edit',sessionController.LoginRequired,quizController.edit);
+router.put('/quizes/:quizId(\\d+)',sessionController.LoginRequired,quizController.update);
+router.delete('/quizes/:quizId(\\d+)',sessionController.LoginRequired,quizController.destroy);
 
-// Configuramos middleware que atiende a la petición de crear pregunta
-router.get('/quizes/new',quizController.new);
-// Configuramos middleware que atiende a la petición de guardar pregunta utilizando el metodo POST
-router.post('/quizes/create',quizController.create);
-// Configuramos filtro que atiende a la petición de editar pregunta utilizando el metodo GET
-router.get('/quizes/:quizId(\\d+)/edit',quizController.edit);
-// Configuramos filtro que atiende a la petición de actualizar pregunta utilizando el metodo PUT
-router.put('/quizes/:quizId(\\d+)',quizController.update);
-// Configuramos filtro que atiende a la petición de eliminar pregunta utilizando el metodo DELETE
-router.delete('/quizes/:quizId(\\d+)',quizController.destroy);
-
-// Configuramos filtro que atiende a la petición de crear nuevo comentario
+// Definición de rutas para comentarios
 router.get('/quizes/:quizId(\\d+)/comments/new',commentController.new);
-// Configuramos middleware que atiende a la petición de guardar comentario utilizando el metodo POST
 router.post('/quizes/:quizId(\\d+)/comments',commentController.create);
 
-// GET pagina de author
+// Definición de rutas para author
 router.get('/author',function(req, res, next) {
-    res.render('author', {errors: []});
+  res.render('author', {errors: []});
 });
 
 module.exports = router;

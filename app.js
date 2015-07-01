@@ -50,6 +50,9 @@ app.use('/', routes);
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
+  // Reiniciamos la propiedad redir de session, por si a continuación se hace un inicio de sesión, que no vuelva
+  // a la dirección que provocó el error
+  req.session.redir = '/';
   next(err);
 });
 

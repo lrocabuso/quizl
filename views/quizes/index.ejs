@@ -38,12 +38,14 @@
           <% var a; for(i=0; i < preguntas.length; i++) { %>
             <tr>
                 <td width='90%'><a href='quizes/<%= preguntas[i].id %>' type="button" class="btn btn-sm btn-default btn-block" rel="popover" data-trigger="hover" data-content="<%= preguntas[i].tema %>"><%= preguntas[i].pregunta %></a></td>
+                <% if(session.user) { %>
                 <td width='5%'><a href='/quizes/<%= preguntas[i].id %>/edit' type="button" class="btn btn-sm btn-primary"><span class='glyphicon glyphicon-edit' rel="popover" data-trigger="hover" data-content="Editar"></span></a></td>
                 <td width='5%'>
                   <form method="POST" action="/quizes/<%= preguntas[i].id %>?_method=delete">
-                  <button type="submit" class="btn btn-sm btn-danger" onClick="return confirm('Borrar: <%= preguntas[i].pregunta %>');"><span class='glyphicon glyphicon-trash' rel="popover" data-trigger="hover" data-content="Eliminar"></span></button>
-                </form>
+                    <button type="submit" class="btn btn-sm btn-danger" onClick="return confirm('Borrar: <%= preguntas[i].pregunta %>');"><span class='glyphicon glyphicon-trash' rel="popover" data-trigger="hover" data-content="Eliminar"></span></button>
+                  </form>
                 </td>
+                <% } %>
             </tr>
           <% } %>
         </tbody>
@@ -51,7 +53,9 @@
       </div>
       </div>
   </div>
+  <% if(session.user) { %>
   <a type="button" class="btn btn-default" href='/quizes/new'>Crear pregunta</a>
+  <% } %>
   <% if(borrar_filtro) { %>
     <a type="button" class="btn btn-warning" href='/quizes'>Borrar filtro</a>
   <% } %>
