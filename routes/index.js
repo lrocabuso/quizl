@@ -17,6 +17,8 @@ router.get('/', function(req, res, next) {
 // Indica que si en la ruta llega algún parámetro de nombre quizId se ejecute la acción load  del controlador
 // Se tiene que definir antes de cualquier otra petición
 router.param('quizId',quizController.load);
+// Autoload de comandos con :commentId
+router.param('commentId',commentController.load);
 
 //  Definición de rutas de session
 router.get('/login',sessionController.new);         // formulario
@@ -36,6 +38,7 @@ router.delete('/quizes/:quizId(\\d+)',sessionController.LoginRequired,quizContro
 // Definición de rutas para comentarios
 router.get('/quizes/:quizId(\\d+)/comments/new',commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments',commentController.create);
+router.put('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',sessionController.LoginRequired,commentController.publish);
 
 // Definición de rutas para author
 router.get('/author',function(req, res, next) {

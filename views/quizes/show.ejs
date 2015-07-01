@@ -33,9 +33,28 @@
         </h4>
       </div>
       <div class="panel-body">
-        <% for(index in pregunta.Comments){ %>
-          <p><%= pregunta.Comments[index].texto %></p>
-        <% } %>
+        <div class="table-responsive">
+          <table class="table">
+            <tbody>
+            <% for(index in pregunta.Comments){ %>
+              <% if(pregunta.Comments[index].publicado || session.user) { %>
+                <tr>
+                  <% if(session.user && !pregunta.Comments[index].publicado) { %>
+                  <td width="3%">
+                    <form method="POST" action="/quizes/<%= pregunta.id %>/comments/<%= pregunta.Comments[index].id %>/publish?_method=put"  class="form-horizontal">
+                    <button type="submit" class="btn btn-xs btn-primary"><span class=' glyphicon glyphicon-ok' rel="popover" data-trigger="hover" data-content="Aprobar Comentario"></span></button>
+                    </form>
+                  </td>
+                  <% } else { %>
+                  <td>&nbsp;</td>
+                  <% } %>
+                  <td><%= pregunta.Comments[index].texto %></td>
+                </tr>
+              <% } %>
+            <% } %>
+          </tbody>
+        </table>
+        </div>
       </div>
     </div>
     </div>

@@ -4,7 +4,9 @@ var models = require('../models/models');
 // Autoload:  Permite realizar una factorización del código si en alguna de las acciones llega
 // un parámetro de nombre quizId
 exports.load = function(req, res, next, quizId){
-  models.Quiz.findById(quizId,{include: [{model: models.Comment}]}).then(function(quiz){
+  models.Quiz
+  .findById(quizId,{include: [{model: models.Comment}]})
+  .then(function(quiz){
     if(quiz) {
       // Creamos nueva propiedad en req asignándole el valor de quiz obtenido en la lectura
       req.quiz = quiz;
@@ -13,6 +15,9 @@ exports.load = function(req, res, next, quizId){
       // Si no existe el quiz con id quizId creamos mensaje de error
       next(new Error("No existe la pregunta con id: "+quizId));
     }
+  })
+  .catch(function(error){  // Añadimos controlador de errores para findById
+    next(error);
   });
 };
 
