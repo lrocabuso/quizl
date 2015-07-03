@@ -5,29 +5,36 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('quizl:server');
+var debug = require('debug')('quizl');
+// Cargamos el modulo de ficheros para leer los ficheros de clave y certificado
+var fs = require('fs');
+// Cargamos el modulo https para conexiones seguras
+var https = require('https');
+// Desactivamos el protocolo http en el ultimo apartado del modulo 9
 var http = require('http');
 
-/**
- * Get port from environment and store in Express.
- */
+var options = {
+    key: fs.readFileSync('certs/quizl-luis-key.pem').toString(),
+    cert: fs.readFileSync('certs/quizl-luis-cert.pem').toString()
+};
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
+app.set('httpsPort', 443);
 
-/**
- * Create HTTP server.
- */
+var httpServer = http.createServer(app);
+var httpsServer = https.createServer(options, app);
 
-var server = http.createServer(app);
+//server.on('request', app);
+httpsServer.listen(443, function () {
+  console.log("Listening secure on " + httpsServer.address().address + ":" + httpsServer.address().port);
+});
 
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+httpServer.listen(app.get('port'), function () {
+  console.log("Listening insecure on " + httpServer.address().address + ":" + httpServer.address().port);
+});
+httpServer.on('error', onError);
+httpServer.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -82,7 +89,7 @@ function onError(error) {
  */
 
 function onListening() {
-  var addr = server.address();
+  var addr = httpServer.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;

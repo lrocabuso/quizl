@@ -10,7 +10,7 @@ var partials = require('express-partials');
 var methodOverride = require('method-override');
 // Incluir modulo para gestión de sesiones
 var session = require('express-session');
-
+// Incluir modulo de rutas
 var routes = require('./routes/index');
 
 var app = express();
@@ -31,13 +31,38 @@ app.use(session({ secret: 'Quizl-Luis 2015', resave: true, saveUninitialized: tr
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Helper dinámico para realizar el auto-logout si se ha superado un intervalo de espera sin actividad
+app.use(function(req, res, next){
+  var actual = new Date().getTime();
+  var transcurrido = 0;
+  var espera = 1;
+  // Esta propiedad se crea al iniciar sesión. Contiene el momento de la última actividad con sesión iniciada
+  if(req.session.user) {
+    transcurrido=(actual-req.session.user.inicio)/1000; // seg transcurridos
+    if(transcurrido > (espera*60)) {  // Si se ha superado el tiempo de espera
+      delete req.session.user;        // Destruimos la sesion
+      req.session.outtime=true;       // Activamos un indicador que consultará el siguiente mw
+    } else {
+      req.session.user.inicio=new Date().getTime(); // Reiniciamos variable para siguiente comprobación
+    }
+  }
+
+  next();
+});
+
 // Helpers dinámicos (muy importante declararlos antes de la directiva app.use('/',routes))
 app.use(function(req, res, next){
   // Si no existe la propiedad redir (variable de sesion) la inicializa
   if (!req.session.redir) { req.session.redir = '/';  }
   // Guardamos la URL completa en session.redir para despues del login hacer el redirect de forma correcta
   // Si guardamos solo el path, cuando estamos en peticiones que lleven variables no se devuelven las variables y da error
-  if(!req.path.match(/\/login|\/logout/)){req.session.redir = req.originalUrl; }
+  if(!req.path.match(/\/login|\/logout/)){ req.session.redir = req.originalUrl; }
+  // Si se acaba de cerrar la sesion por superar el tiempo de espera
+  if(req.session.outtime) {
+      // Modificamos redir para enviar al usuario a la página principal en el caso de estar ejecutandose una acción put o delete
+      if(req.session.redir.match(/.*\?_method.*/)) req.session.redir='/';
+      delete req.session.outtime;
+  }
   // Hacemos visible session.redir para las vistas utilizando una variable local
   // Desde cualquier vista se podrá acceder a la sesión haciendo referencia al objeto session
   res.locals.session = req.session;
@@ -82,5 +107,22 @@ app.use(function(err, req, res, next) {
   });
 });
 
+
+
+//var espera=1;
+
+//function logout() {
+//  var d_fin=new Date();
+//  var n_fin=d_fin.getTime();
+  // if((n_fin-n_ini) > (espera*60*1000)) {
+  //if((n_fin-n_ini) > 10000) {
+  //  if(session.user) {
+  //      console.log("HAY QUE CERRAR SESION");
+  //  } else {
+  //    console.log("NO HAY SESION");
+  //  }
+  //}
+//  console.log("TIMER: "+n_fin+" DIF: "+(n_fin-n_ini));
+//};
 
 module.exports = app;

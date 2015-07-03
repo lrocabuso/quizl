@@ -30,7 +30,11 @@ exports.create = function(req, res){
     } else {
       // Creamos recurso session.user guardando los datos del usuario
       // Una sesión se considera definida si existe el recursos session.user
-      req.session.user = {id:user.id, username:user.username};
+      req.session.user = {
+                id:user.id,
+                username:user.username,
+                inicio:new Date().getTime() // Iniciamos variable con valor de tiempo de inicio
+                };
       res.redirect(req.session.redir.toString()); // Redireccionamos al path anterior al login, almacenado en session.redir
     }
   });

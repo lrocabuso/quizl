@@ -94,9 +94,9 @@ Módulo 9 (Relaciones, Sesiones y Protocolo HTTPS)
 -------------------------------------------------------------------------------------------------------------
 ### Paquetes instalados:
 
-![SESSION Version][express-session-image]
+![SESSION Version][express-session-image] ![FORCESSL Version][express-force-ssl-image]
 
-En este último módulo vemos como crear relaciones entre las tablas de la BD utilizando los métodos que define sequelize. También vemos el tratamiento de sesiones de trabajo con autenticación de usuarios por medio del paquete express-session, donde se nos enseña como crear y destruir sesiones de trabajo, como realizar la validación de usuarios y la autorización de trabajo.
+En este último módulo vemos como crear relaciones entre las tablas de la BD utilizando los métodos que define sequelize. También vemos el tratamiento de sesiones de trabajo con autenticación de usuarios por medio del paquete express-session, donde se nos enseña como crear y destruir sesiones de trabajo, como realizar la validación de usuarios y la autorización de trabajo, por medio de los comentarios asociados a las preguntas.
 
 
 
@@ -107,7 +107,7 @@ En este último módulo vemos como crear relaciones entre las tablas de la BD ut
 - Mostrar la lista de comentarios asociados a una pregunta en la vista answer.
 - Añadir enlace que permita crear un nuevo comentario.
 - Crear formulario para introducir el texto del comentario en views/comments
-- - - -
+* * * *
 - Instalar paquete express-session para el control de sesiones de trabajo.
 - Importar, iniciar y hacer visibles las sesiones desde app.js.
 - Crear filtros para las peticiones de login y logout en el router principal.
@@ -115,6 +115,13 @@ En este último módulo vemos como crear relaciones entre las tablas de la BD ut
 - Crear controlador de usuarios para realizar la autenticación.
 - Modificar el interface de trabajo para iniciar/cerrar sesión.
 - Crear nueva vista para el formulario de inicio de sesión.
+* * * *
+- Añadir nuevo campo *publicado* al modelo comment, para autorizar su publicación.
+- Añadir las acciones autoload y publish al controlador comment_controller.
+- Crear filtro para la petición PUT de publish en el router principal.
+- Modificar la vista show de quizes para que muestre los comentarios autorizados a los usuario anónimos.
+
+
 
 
 
@@ -136,3 +143,4 @@ En este último módulo vemos como crear relaciones entre las tablas de la BD ut
 [heroku-toolbelt-image]:https://img.shields.io/badge/heroku--toolbelt-3.38.2-red.svg
 [foreman-image]:https://img.shields.io/badge/foreman-0.78.0-blue.svg
 [express-session-image]:https://img.shields.io/badge/express--session-1.11.3-green.svg
+[express-force-ssl-image]:https://img.shields.io/badge/express--force--ssl-0.2.13-green.svg

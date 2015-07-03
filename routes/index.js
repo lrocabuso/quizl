@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+// Para poder tratar algunas de las rutas por ssl de forma obligatoria (login, logout)
+var forceSSL = require('express-force-ssl');
 // Importamos el enrutador de las preguntas
 var quizController = require('../controllers/quiz_controller');
 // Importamos el enrutador de las comentarios
@@ -7,11 +9,14 @@ var commentController = require('../controllers/comment_controller');
 // Importamos el enrutador de las sesiones
 var sessionController = require('../controllers/session_controller');
 
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   // Hemos cambiado el valor de la variable title
   res.render('index', { title: 'Quiz Creator', errors: [] });
 });
+
+
 
 // Autoload de comandos con :quizId
 // Indica que si en la ruta llega algún parámetro de nombre quizId se ejecute la acción load  del controlador
@@ -21,7 +26,7 @@ router.param('quizId',quizController.load);
 router.param('commentId',commentController.load);
 
 //  Definición de rutas de session
-router.get('/login',sessionController.new);         // formulario
+router.get('/login',forceSSL,sessionController.new);         // formulario
 router.post('/login',sessionController.create);     // crear
 router.delete('/logout',sessionController.destroy); // destruir
 
@@ -44,5 +49,6 @@ router.put('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',sessionCont
 router.get('/author',function(req, res, next) {
   res.render('author', {errors: []});
 });
+
 
 module.exports = router;
