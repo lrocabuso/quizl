@@ -20,13 +20,14 @@ var options = {
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-app.set('httpsPort', 443);
+app.set('httpsPort', 8443);
+app.enable('trust proxy');
 
 var httpServer = http.createServer(app);
 var httpsServer = https.createServer(options, app);
 
 //server.on('request', app);
-httpsServer.listen(443, function () {
+httpsServer.listen(app.get('httpsPort'), function () {
   console.log("Listening secure on " + httpsServer.address().address + ":" + httpsServer.address().port);
 });
 
