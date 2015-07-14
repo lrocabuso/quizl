@@ -20,7 +20,7 @@ var options = {
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
-app.set('httpsPort', 443);
+app.set('httpsPort', 8443);
 app.enable('trust proxy');
 
 var httpServer = http.createServer(app);
