@@ -1,0 +1,63 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <!-- nuevo formulario de busquedas -->
+    <form method="GET" action="/users" class="form-horizontal">
+    <fieldset>
+      <div class="form-group">
+        <div class="input-group col-lg-8 col-md-8 col-sm-8 col-xs-8 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
+        <span class='glyphicon glyphicon-search input-group-addon'></span>
+        <input class="form-control" name="search" placeholder="Introduce patrón de búsqueda" type="text" required>
+        </div>
+      </div>
+    </fieldset>
+    </form>
+    <div class="panel panel-default">
+      <div class="panel-body">
+      <!-- Utilizamos div responsive para que la tabla se pueda adaptar a los dispositivos moviles-->
+      <div class="table-responsive">
+        <small>Usuarios (<span class="badge"><%= usuarios.length %></span>)</small>
+        <table class="table">
+          <tbody>
+            <tr>
+              <th>Nombre Usuario</th>
+              <th>Login</th>
+              <th>Creado</th>
+              <th>Acceso</th>
+              <th></th>
+              <th></th>
+            </tr>
+          <% for(i=0; i < usuarios.length; i++) {%>
+            <tr>
+                <td width='45%'><%= usuarios[i].nombre %></td>
+                <td width='25%'><%= usuarios[i].login %></td>
+                <td width='10%'><%= fmtfecha(usuarios[i].createdAt) %></td>
+                <td width='10%'><%= fmtfecha(usuarios[i].acceso) %></td>
+                <% if(session.user.isroot || session.user.username==usuarios[i].login) { // Solo el administrador o el propio usuario tiene permiso para editar %>
+                <td width='5%'><a href='/users/<%= usuarios[i].id %>/edit' type="button" class="btn btn-sm btn-primary"><span class='glyphicon glyphicon-edit' rel="popover" data-trigger="hover" data-content="Editar"></span></a></td>
+                <% } else { %>
+                  <td>&nbsp;</td>
+                <% } %>
+                <% if(session.user.isroot) { // Solo el administrador tiene permiso para eliminar a otros usuarios %>
+                <td width='5%'>
+                  <form method="POST" action="/users/<%= usuarios[i].id %>?_method=delete">
+                    <button type="submit" class="btn btn-sm btn-danger" onClick="return confirm('Borrar: <%= usuarios[i].login %>');"><span class='glyphicon glyphicon-trash' rel="popover" data-trigger="hover" data-content="Eliminar"></span></button>
+                  </form>
+                </td>
+                <%} else {%>
+                <td>&nbsp;</td>
+                <% } %>
+            </tr>
+          <% } %>
+        </tbody>
+        </table>
+      </div>
+      </div>
+  </div>
+  <% if(session.user.isadmin) { // Solo usuarios de tipo administrador pueden crear nuevos usuarios %>
+  <a type="button" class="btn btn-default" href='/users/new'>Nuevo Usuario</a>
+  <% } %>
+  <% if(borrar_filtro) { %>
+    <a type="button" class="btn btn-warning" href='/users'>Borrar filtro</a>
+  <% } %>
+  </div>
+</div>

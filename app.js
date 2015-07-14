@@ -33,11 +33,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Helper dinámico para realizar el auto-logout si se ha superado un intervalo de espera sin actividad
 app.use(function(req, res, next){
-  var actual = new Date().getTime();
-  var transcurrido = 0;
-  var espera = 1;
-  // Esta propiedad se crea al iniciar sesión. Contiene el momento de la última actividad con sesión iniciada
+  var actual = new Date().getTime();  // Obtenemos mlsg desde 01/01/1970
+  var transcurrido = 0;               // Variable para calcular el tiempo transcurrido entre peticiones HTTP
+  var espera = 1;                     // mnt de espera para realizar auto-logout
+  // Si estamos con una sesión iniciada
   if(req.session.user) {
+    // La propiedad 'user.inicio' se crea al iniciar sesión. Contiene el momento de la última actividad con sesión iniciada
     transcurrido=(actual-req.session.user.inicio)/1000; // seg transcurridos
     if(transcurrido > (espera*60)) {  // Si se ha superado el tiempo de espera
       delete req.session.user;        // Destruimos la sesion
@@ -61,7 +62,7 @@ app.use(function(req, res, next){
   if(req.session.outtime) {
       // Modificamos redir para enviar al usuario a la página principal en el caso de estar ejecutandose una acción put o delete
       if(req.session.redir.match(/.*\?_method.*/)) req.session.redir='/';
-      delete req.session.outtime;
+      delete req.session.outtime; // Destruimos propiedad (sólo se puede crear en el mw anterior)
   }
   // Hacemos visible session.redir para las vistas utilizando una variable local
   // Desde cualquier vista se podrá acceder a la sesión haciendo referencia al objeto session

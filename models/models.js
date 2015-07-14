@@ -33,6 +33,8 @@ var sequelize = new Sequelize(DB_name, user, pwd,
     }
 );
 
+// Importar la definición de la tabla User definida en el fichero user.js
+var User = sequelize.import(path.join(__dirname,'user'));
 // Importar la definición de la tabla Quiz definida en el fichero quiz.js
 var Quiz = sequelize.import(path.join(__dirname,'quiz'));
 // Importar la definición de la tabla Comment definida en el fichero comment.js
@@ -46,17 +48,28 @@ Quiz.hasMany(Comment);
 exports.Quiz = Quiz;
 // exportamos el modelo con la definicion de la tabla Comment
 exports.Comment = Comment;
+// exportamos el modelo con la definicion de la tabla User
+exports.User = User;
 
 // Comprobamos la cantidad de registros de la tabla Quiz que nos servira para incializar la BD
 // .success es la forma antigua de crear un callback si se realiza la sincronización
 sequelize.sync().then(function(){
   // Obtenemos el total de registros que tiene la Quiz
   Quiz.count().then(function(count){
-    if(count===0){ // La tabla se inicializará sólo si está vaciá
+    if(count===0){ // La tabla se inicializará sólo si está vacía
       // Agragamos tres registro y mostramos mensaje por consola si to ha ido bien
-      Quiz.create({pregunta: 'Capital de Italia',respuesta: 'Roma', tema:'humanidades'});
-      Quiz.create({pregunta: 'Capital de Portugal',respuesta: 'Lisboa', tema:'humanidades'});
-      Quiz.create({pregunta: 'Capital de España',respuesta: 'Madrid', tema:'humanidades'}).then(function(){console.log('Base de datos inicializada con exito.')});
+      Quiz.create({pregunta: 'Capital de Italia',respuesta: 'Roma', tema:'Humanidades'});
+      Quiz.create({pregunta: 'Capital de Portugal',respuesta: 'Lisboa', tema:'Humanidades'});
+      Quiz.create({pregunta: 'Capital de España',respuesta: 'Madrid', tema:'Humanidades'}).then(function(){console.log('Base de datos inicializada con exito.')});
+    }
+  });
+  User.count().then(function(count){
+    if(count===0){ // La tabla se inicializará sólo si está vacía
+      User
+      .create({nombre: 'Luis Roca', login: 'admin',password: '123aB456', acceso: new Date(), admin:true});
+      User
+      .create({nombre: 'Usuario Invitado', login: 'anonimo',password: '111a222', acceso: new Date(), admin:false})
+      .then(function(){console.log('Tabla de usuarios inicializada con éxito.')});
     }
   });
 });

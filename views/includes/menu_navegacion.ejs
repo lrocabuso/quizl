@@ -23,6 +23,10 @@
     <ul class="nav navbar-nav">
       <li><a href="/">Inicio</a></li>
       <li><a href="/quizes">Preguntas</a></li>
+      <li><a href="/quizes/statistics">Estadísticas</a></li>
+      <% if(session.user) { // Cualquier usuario puede mostrar el listado de usuarios %>
+      <li><a href="/users">Usuarios</a></li>
+      <% } %>
     </ul>
   </div>
 </div>

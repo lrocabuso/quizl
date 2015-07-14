@@ -94,11 +94,13 @@ Módulo 9 (Relaciones, Sesiones y Protocolo HTTPS)
 -------------------------------------------------------------------------------------------------------------
 ### Paquetes instalados:
 
-![SESSION Version][express-session-image] ![FORCESSL Version][express-force-ssl-image]
+![SESSION Version][express-session-image] ![FORCESSL Version][express-force-ssl-image] ![MD5 Version][md5-image] ![MOMENT Version][moment-image]
 
 En este último módulo vemos como crear relaciones entre las tablas de la BD utilizando los métodos que define sequelize. También vemos el tratamiento de sesiones de trabajo con autenticación de usuarios por medio del paquete express-session, donde se nos enseña como crear y destruir sesiones de trabajo, como realizar la validación de usuarios y la autorización de trabajo, por medio de los comentarios asociados a las preguntas.
 
+*Como opción adicional he incluido un control de usuarios, donde si se realiza login como administrador se pueden listar, crear, modificar y cambiar las claves de los usuarios.*
 
+El paquete **express-force-ssl** se utiliza para forzar las conexiones HTTP a HTTPS en las vistas de login o control de usuarios, el paquete **MD5** se utiliza para guardar las claves de los usuarios encriptadas y el paquete **moment** se utiliza para poder formatear los campos de tipo DATE al formato corto cuando se muestran en las vistas.
 
 - Crear nuevo modelo para la tabla de comentarios.
 - Definir la relación 1->N entre quizs y comments.
@@ -120,7 +122,14 @@ En este último módulo vemos como crear relaciones entre las tablas de la BD ut
 - Añadir las acciones autoload y publish al controlador comment_controller.
 - Crear filtro para la petición PUT de publish en el router principal.
 - Modificar la vista show de quizes para que muestre los comentarios autorizados a los usuario anónimos.
-
+* * * *
+- Crear acción para el control del tiempo de conexión de los usuarios en el archivo app.js que cierre la sesión transcurridos 2 mnts.
+- Crear acción en el controlador quiz_controller para calcular las estadísticas de preguntas y comentarios.
+- Crear nuevo modelo para usuarios.
+- Crear controlador user_controller para las acciones de usuarios: listar, crear, actualizar, eliminar, autenticar y accceso.
+- Crear filtros para las peticiones de acciones de usuarios en el router principal.
+- Crear las vistas asociadas a las acciones de usuarios en un nuevo directorio 'users'
+- Crear enlace en el menú de navegación para poder acceder al control de usuarios, sólo si se logea como administrador.
 
 
 
@@ -144,3 +153,5 @@ En este último módulo vemos como crear relaciones entre las tablas de la BD ut
 [foreman-image]:https://img.shields.io/badge/foreman-0.78.0-blue.svg
 [express-session-image]:https://img.shields.io/badge/express--session-1.11.3-green.svg
 [express-force-ssl-image]:https://img.shields.io/badge/express--force--ssl-0.2.13-green.svg
+[md5-image]:https://img.shields.io/badge/MD5-1.2.2-green.svg
+[moment-image]:https://img.shields.io/badge/moment-2.10.3-green.svg

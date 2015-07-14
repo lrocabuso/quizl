@@ -16,7 +16,13 @@
       <div class="input-group">
         <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
         <!-- Añadimos atributo required de HTML5 para que sea obligatorio rellenar el campo -->
-        <input class="form-control" id="passwd" name="passwd" placeholder="clave" type="password" required>
+        <input class="form-control" id="passwd" name="passwd" placeholder="clave"
+            type="password"
+            maxlength=16
+            required
+            title=""
+            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            onchange="this.setCustomValidity(this.validity.patternMismatch ?  'La contraseña debe contener al menos 8 caracteres, incluyendo mayúsculas / minúsculas y números': '');">
       </div>
       <br/>
       <div class="col-lg-4 col-lg-offset-4">

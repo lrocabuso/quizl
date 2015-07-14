@@ -156,3 +156,35 @@ exports.answer = function(req, res){
       // Enviamos como variable la id de la pregunta para poder volver a la misma que se ha contestado
       res.render('quizes/answer',{pregunta: req.quiz, respuesta: msg, tipopanel: tipo_panel, errors: []});
 };
+
+
+
+exports.statistics = function(req,res) {
+var estadisticas={preguntas:0, comentarios:0, promedio:0, con_comentario:0, sin_comentario:0,administradores:0,usuarios:0};
+ models.User
+  .count()
+  .then(function(count){
+    estadisticas.usuarios=count;
+  });
+  models.User
+   .count({where: {admin:true}})
+   .then(function(count){
+     estadisticas.administradores=count;
+  });
+  models.Quiz
+  .findAndCountAll({include: [{model: models.Comment}]})
+  .then(function(quiz){
+    var registros = quiz.rows;
+    var com=0;
+    estadisticas.preguntas=registros.length;
+    registros.forEach(function(reg) {
+      com=reg.Comments.length;
+      if(com) estadisticas.con_comentario++;
+      else estadisticas.sin_comentario++;
+      estadisticas.comentarios+=com;
+    });
+    estadisticas.promedio=Math.ceil(estadisticas.comentarios/estadisticas.preguntas);
+    res.render('quizes/estatistics',{estadistica: estadisticas, errors: []});
+  });
+
+};

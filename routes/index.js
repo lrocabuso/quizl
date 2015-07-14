@@ -6,6 +6,8 @@ var forceSSL = require('express-force-ssl');
 var quizController = require('../controllers/quiz_controller');
 // Importamos el enrutador de las comentarios
 var commentController = require('../controllers/comment_controller');
+// Importamos el enrutador de los usuarios
+var userController = require('../controllers/user_controller');
 // Importamos el enrutador de las sesiones
 var sessionController = require('../controllers/session_controller');
 
@@ -22,16 +24,27 @@ router.get('/', function(req, res, next) {
 // Indica que si en la ruta llega algún parámetro de nombre quizId se ejecute la acción load  del controlador
 // Se tiene que definir antes de cualquier otra petición
 router.param('quizId',quizController.load);
-// Autoload de comandos con :commentId
+// Autoload de comentarios con :commentId
 router.param('commentId',commentController.load);
+// Autoload de usuario con :userId
+router.param('userId',userController.load);
+
+//  Definición de rutas de usuarios
+router.get('/users',sessionController.LoginRequired,forceSSL,userController.index);
+router.get('/users/new',sessionController.LoginAdminRequired,forceSSL,userController.new);
+router.post('/users/create',userController.create);
+router.get('/users/:userId(\\d+)/edit',sessionController.LoginRequired,forceSSL,userController.edit);
+router.put('/users/:userId(\\d+)',userController.update);
+router.delete('/users/:userId(\\d+)',userController.destroy);
 
 //  Definición de rutas de session
-router.get('/login',forceSSL,sessionController.new);         // formulario
+router.get('/login',forceSSL,sessionController.new); // formulario
 router.post('/login',sessionController.create);     // crear
 router.delete('/logout',sessionController.destroy); // destruir
 
 // Definición de rutas para quiz
 router.get('/quizes',quizController.index);
+router.get('/quizes/statistics',quizController.statistics);
 router.get('/quizes/:quizId(\\d+)',quizController.show);
 router.get('/quizes/:quizId(\\d+)/answer',quizController.answer);
 router.get('/quizes/new',sessionController.LoginRequired,quizController.new);
