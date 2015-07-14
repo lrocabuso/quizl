@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(function(req, res, next){
   var actual = new Date().getTime();  // Obtenemos mlsg desde 01/01/1970
   var transcurrido = 0;               // Variable para calcular el tiempo transcurrido entre peticiones HTTP
-  var espera = 1;                     // mnt de espera para realizar auto-logout
+  var espera = 2;                     // mnt de espera para realizar auto-logout
   // Si estamos con una sesión iniciada
   if(req.session.user) {
     // La propiedad 'user.inicio' se crea al iniciar sesión. Contiene el momento de la última actividad con sesión iniciada
